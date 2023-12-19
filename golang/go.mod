@@ -1,4 +1,4 @@
-module github.com/r0bnet/five-lines-of-code-golang
+module github.com/r0bnet/five-lines
 
 go 1.21.3
 
