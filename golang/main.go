@@ -129,8 +129,8 @@ func moveVertical(dy int) {
 
 func update() {
 	for len(inputs) > 0 {
-		current := inputs[len(inputs)-1]
 		inputMutex.Lock()
+		current := inputs[len(inputs)-1]
 		inputs = inputs[:len(inputs)-1]
 		inputMutex.Unlock()
 		if current == InputLeft {
