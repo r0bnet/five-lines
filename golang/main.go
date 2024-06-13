@@ -8,9 +8,9 @@ import (
 )
 
 const (
-	TILE_SIZE = 30;
+	TileSize = 30;
 	FPS = 30;
-	SLEEP = 1000 / FPS;
+	Sleep = 1000 / FPS;
 )
 
 const (
@@ -182,14 +182,14 @@ func draw() {
 			}
 
 			if gameMap[y][x] != TileAir && gameMap[y][x] != TilePlayer {
-				g.FillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+				g.FillRect(x * TileSize, y * TileSize, TileSize, TileSize);
 			}
 		}
 	}
 
 	// Draw player
 	g.FillStyle = "#ff0000";
-	g.FillRect(playerx * TILE_SIZE, playery * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+	g.FillRect(playerx * TileSize, playery * TileSize, TileSize, TileSize);
 }
 
 func gameLoop() {
@@ -199,7 +199,7 @@ func gameLoop() {
 		draw()
 		after := time.Now()
 		frameTime := after.Sub(before).Milliseconds()
-		sleep := SLEEP - frameTime
+		sleep := Sleep - frameTime
 		time.Sleep(time.Duration(sleep) * time.Millisecond)
 	}
 }
