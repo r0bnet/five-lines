@@ -9,9 +9,9 @@ One of the main differences is that the game is not running in the browser or ha
 
 One of the main motivations is to explore whether the refactoring rules that are meant to be applied on object-oriented languages (like TypeScript) are valid in Go as well, although it's [not strictly object-oriented](https://go.dev/doc/faq#Is_Go_an_object-oriented_language).
 
-## Differences
+## Details
 
-### Section 3.1
+### Initial State
 
 This is the inital state of the project and some changes were needed so that the project is not only running Go code, but also following the Go conventions. The following changes were made (from top to bottom):
 
@@ -33,3 +33,5 @@ This is the inital state of the project and some changes were needed so that the
   Since there currently is no user interface (like the browser with some HTML elements) we have to stub some global objects (`Canvas` and `CanvasRenderingContext2D`) and write helper methods to mimic their behavior. Luckily two of the four methods are simple procedures with no return value. The other two methods could easily be stubbed.
 
 All the rest of the code is pretty much the same as in the TypeScript version. Even the syntax is really similar and should be easily readable for anyone who is not familiar with Go.
+
+### Chapter 3
