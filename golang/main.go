@@ -128,43 +128,51 @@ func moveVertical(dy int) {
 }
 
 func update() {
-	handleInput()
+	handleInputs()
 	updateMap()
 }
 
-func handleInput() {
+func handleInputs() {
 	for len(inputs) > 0 {
 		inputMutex.Lock()
 		current := inputs[len(inputs)-1]
 		inputs = inputs[:len(inputs)-1]
 		inputMutex.Unlock()
-		if current == InputLeft {
-			moveHorizontal(-1)
-		} else if current == InputRight {
-			moveHorizontal(1)
-		} else if current == InputUp {
-			moveVertical(-1)
-		} else if current == InputDown {
-			moveVertical(1)
-		}
+		handleInput(current)
+	}
+}
+
+func handleInput(input int) {
+  if input == InputLeft {
+		moveHorizontal(-1)
+	} else if input == InputRight {
+		moveHorizontal(1)
+	} else if input == InputUp {
+		moveVertical(-1)
+	} else if input == InputDown {
+		moveVertical(1)
 	}
 }
 
 func updateMap() {
 	for y := len(gameMap) - 1; y >= 0; y-- {
 		for x := 0; x < len(gameMap[y]); x++ {
-			if (gameMap[y][x] == TileStone || gameMap[y][x] == TileFallingStone) && gameMap[y+1][x] == TileAir {
-				gameMap[y+1][x] = TileFallingStone
-				gameMap[y][x] = TileAir
-			} else if (gameMap[y][x] == TileBox || gameMap[y][x] == TileFallingBox) && gameMap[y+1][x] == TileAir {
-				gameMap[y+1][x] = TileFallingBox
-				gameMap[y][x] = TileAir
-			} else if gameMap[y][x] == TileFallingStone {
-				gameMap[y][x] = TileStone
-			} else if gameMap[y][x] == TileFallingBox {
-				gameMap[y][x] = TileBox
-			}
+			updateTile(x, y)
 		}
+	}
+}
+
+func updateTile(x, y int) {
+	if (gameMap[y][x] == TileStone || gameMap[y][x] == TileFallingStone) && gameMap[y+1][x] == TileAir {
+		gameMap[y+1][x] = TileFallingStone
+		gameMap[y][x] = TileAir
+	} else if (gameMap[y][x] == TileBox || gameMap[y][x] == TileFallingBox) && gameMap[y+1][x] == TileAir {
+		gameMap[y+1][x] = TileFallingBox
+		gameMap[y][x] = TileAir
+	} else if gameMap[y][x] == TileFallingStone {
+		gameMap[y][x] = TileStone
+	} else if gameMap[y][x] == TileFallingBox {
+		gameMap[y][x] = TileBox
 	}
 }
 
