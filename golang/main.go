@@ -128,6 +128,11 @@ func moveVertical(dy int) {
 }
 
 func update() {
+	handleInputs()
+	handleMap()
+}
+
+func handleInputs() {
 	for len(inputs) > 0 {
 		inputMutex.Lock()
 		current := inputs[len(inputs)-1]
@@ -143,7 +148,9 @@ func update() {
 			moveVertical(1)
 		}
 	}
+}
 
+func handleMap() {
 	for y := len(gameMap) - 1; y >= 0; y-- {
 		for x := 0; x < len(gameMap[y]); x++ {
 			if (gameMap[y][x] == TileStone || gameMap[y][x] == TileFallingStone) && gameMap[y+1][x] == TileAir {
