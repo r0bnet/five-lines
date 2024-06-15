@@ -161,12 +161,15 @@ func update() {
 	}
 }
 
-func draw() {
+func createGraphics() CanvasRenderingContext2D {
 	canvas := GetElementById("GameCanvas")
 	g := canvas.GetContext("2d")
-
 	g.ClearRect(0, 0, canvas.Width, canvas.Height);
+	return g
+}
 
+func draw() {
+	g := createGraphics()
 	drawMap(g)
 	drawPlayer(g)
 }
