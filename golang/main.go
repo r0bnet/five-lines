@@ -167,6 +167,11 @@ func draw() {
 
 	g.ClearRect(0, 0, canvas.Width, canvas.Height);
 
+	drawMap(g)
+	drawPlayer(g)
+}
+
+func drawMap(g CanvasRenderingContext2D) {
 	for y := 0; y < len(gameMap); y++ {
 		for x := 0; x < len(gameMap[y]); x++ {
 			if gameMap[y][x] == TileFlux {
@@ -188,7 +193,9 @@ func draw() {
 			}
 		}
 	}
+}
 
+func drawPlayer(g CanvasRenderingContext2D) {
 	g.FillStyle = "#ff0000";
 	g.FillRect(playerx * TileSize, playery * TileSize, TileSize, TileSize);
 }
