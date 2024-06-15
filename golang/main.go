@@ -129,7 +129,7 @@ func moveVertical(dy int) {
 
 func update() {
 	handleInputs()
-	handleMap()
+	updateMap()
 }
 
 func handleInputs() {
@@ -150,7 +150,7 @@ func handleInputs() {
 	}
 }
 
-func handleMap() {
+func updateMap() {
 	for y := len(gameMap) - 1; y >= 0; y-- {
 		for x := 0; x < len(gameMap[y]); x++ {
 			if (gameMap[y][x] == TileStone || gameMap[y][x] == TileFallingStone) && gameMap[y+1][x] == TileAir {
