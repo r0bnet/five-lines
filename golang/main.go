@@ -165,10 +165,12 @@ func draw() {
 	canvas := GetElementById("GameCanvas")
 	g := canvas.GetContext("2d")
 
+	g.ClearRect(0, 0, canvas.Width, canvas.Height);
+
 	for y := 0; y < len(gameMap); y++ {
 		for x := 0; x < len(gameMap[y]); x++ {
 			if gameMap[y][x] == TileFlux {
-				// g.FillStyle = "#ccffcc";
+				g.FillStyle = "#ccffcc";
 			} else if gameMap[y][x] == TileUnbreakable {
 				g.FillStyle = "#999999";
 			} else if gameMap[y][x] == TileStone || gameMap[y][x] == TileFallingStone {
@@ -187,7 +189,6 @@ func draw() {
 		}
 	}
 
-	// Draw player
 	g.FillStyle = "#ff0000";
 	g.FillRect(playerx * TileSize, playery * TileSize, TileSize, TileSize);
 }

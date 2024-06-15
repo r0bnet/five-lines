@@ -1,6 +1,9 @@
 package main
 
-type Canvas struct {}
+type Canvas struct {
+	Width  int
+	Height int
+}
 
 func GetElementById(id string) Canvas {
 	return Canvas{}
