@@ -128,11 +128,11 @@ func moveVertical(dy int) {
 }
 
 func update() {
-	handleInputs()
+	handleInput()
 	updateMap()
 }
 
-func handleInputs() {
+func handleInput() {
 	for len(inputs) > 0 {
 		inputMutex.Lock()
 		current := inputs[len(inputs)-1]
