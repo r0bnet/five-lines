@@ -28,12 +28,101 @@ const (
 	TileLock2
 )
 
-const (
-	InputUp int = iota
-	InputDown
-	InputLeft
-	InputRight
-)
+type Input interface {
+	isRight() bool
+	isLeft() bool
+	isUp() bool
+	isDown() bool
+	handle()
+}
+
+type Right struct {}
+
+func (r Right) isRight() bool {
+	return true
+}
+
+func (r Right) isLeft() bool {
+	return false
+}
+
+func (r Right) isUp() bool {
+	return false
+}
+
+func (r Right) isDown() bool {
+	return false
+}
+
+func (r Right) handle() {
+	moveHorizontal(1)
+}
+
+type Left struct {}
+
+func (l Left) isRight() bool {
+	return false
+}
+
+func (l Left) isLeft() bool {
+	return true
+}
+
+func (l Left) isUp() bool {
+	return false
+}
+
+func (l Left) isDown() bool {
+	return false
+}
+
+func (l Left) handle() {
+	moveHorizontal(-1)
+}
+
+type Up struct {}
+
+func (u Up) isRight() bool {
+	return false
+}
+
+func (u Up) isLeft() bool {
+	return false
+}
+
+func (u Up) isUp() bool {
+	return true
+}
+
+func (u Up) isDown() bool {
+	return false
+}
+
+func (u Up) handle() {
+	moveVertical(-1)
+}
+
+type Down struct {}
+
+func (d Down) isRight() bool {
+	return false
+}
+
+func (d Down) isLeft() bool {
+	return false
+}
+
+func (d Down) isUp() bool {
+	return false
+}
+
+func (d Down) isDown() bool {
+	return true
+}
+
+func (d Down) handle() {
+	moveVertical(1)
+}
 
 var (
 	playerx int = 1
@@ -46,7 +135,7 @@ var (
 		{2, 4, 1, 1, 1, 9, 0, 2},
 		{2, 2, 2, 2, 2, 2, 2, 2},
 	}
-	inputs []int = []int{}
+	inputs []Input = []Input{}
 	inputMutex = sync.Mutex{}
 )
 
@@ -65,19 +154,19 @@ func main() {
 			break
 		} else if char == 'w' || key == keyboard.KeyArrowUp {
 			inputMutex.Lock()
-			inputs = append(inputs, InputUp)
+			inputs = append(inputs, Up{})
 			inputMutex.Unlock()
 		} else if char == 's' || key == keyboard.KeyArrowDown {
 			inputMutex.Lock()
-			inputs = append(inputs, InputDown)
+			inputs = append(inputs, Down{})
 			inputMutex.Unlock()
 		} else if char == 'a' || key == keyboard.KeyArrowLeft {
 			inputMutex.Lock()
-			inputs = append(inputs, InputLeft)
+			inputs = append(inputs, Left{})
 			inputMutex.Unlock()
 		} else if char == 'd' || key == keyboard.KeyArrowRight {
 			inputMutex.Lock()
-			inputs = append(inputs, InputRight)
+			inputs = append(inputs, Right{})
 			inputMutex.Unlock()
 		}
 	}
@@ -138,19 +227,7 @@ func handleInputs() {
 		current := inputs[len(inputs)-1]
 		inputs = inputs[:len(inputs)-1]
 		inputMutex.Unlock()
-		handleInput(current)
-	}
-}
-
-func handleInput(input int) {
-  if input == InputLeft {
-		moveHorizontal(-1)
-	} else if input == InputRight {
-		moveHorizontal(1)
-	} else if input == InputUp {
-		moveVertical(-1)
-	} else if input == InputDown {
-		moveVertical(1)
+		current.handle()
 	}
 }
 
